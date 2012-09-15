@@ -24,6 +24,25 @@
 	     member = profiles.values[0];
 	     document.getElementById("profiles").innerHTML = 
 	          "<p id=\"" + member.id + "\">Hello " +  member.firstName + " " + member.lastName + "</p>";
+	     IN.API.NetworkUpdates()
+     		.params({"type": "SHAR", "count": 5}) // get the five most-recent Shares
+     		.result(displayNetworkUpdates)
+     		.error(displayNetworkUpdatesError);
+	}
+	function displayNetworkUpdates(updates) {
+		console.debug(network);
+		var profileDiv = document.getElementById("networkupdates");
+     
+		for (var i in updates.values) {
+			var key = updates.values[i].updateKey; // each update has a unique key
+			var share = updates.values[i].updateContent.person; // the person sharing content
+			profileDiv.innerHTML += "<p id='" + key + "'>" + share.firstName + " " + share.lastName 
+			 + " shared " + share.currentShare.comment + ".</p>";
+		}     
+	}
+	function displayNetworkUpdatesError(error) {
+		console.debug(error);
+		alert("error occurred");
 	}
 </script>
 <!-- /script -->
@@ -37,6 +56,9 @@
 			</script>
 			<!-- 4. Placeholder for the greeting -->
 			<div id="profiles">
+				
+			</div>
+			<div id="networkupdates">
 				
 			</div>
 		</div>
