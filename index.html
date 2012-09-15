@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Connect Link</title>
+<!-- script -->
+<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+  api_key: 1m4xzx01cl9p
+  onLoad: onLinkedInLoad
+  authorize: true
+</script>
+<script type="text/javascript">
+function onLinkedInLoad() {
+     IN.Event.on(IN, "auth", onLinkedInAuth);
+}
+</script>
+<!-- /script -->
+		
+	</head>
+	<body>
+		<div id~"wrapper">
+			<script type="IN/Login"></script>
+		</div>
+	</body>
+</html>
