@@ -45,13 +45,9 @@
      		.params({"type": "CONN", "count": 100, "start": 0}) // get the five most-recent Shares
      		.result(displayNetworkUpdates)
      		.error(displayNetworkUpdatesError);
-     		
-		IN.API.Raw("/people/~/network/updates?type=CONN&count=50&start=0") // construct REST URL
-			.result( function(updates) {
-				console.debug(updates);
-			})
-			.error( function(error) { /* do nothing */ } );
-      
+	}
+	function displayNetworkUpdates2(updates) {
+		console.debug("updates2=" + updates);
 	}
 	function displayNetworkUpdates(updates) {
 		console.debug(updates);
@@ -143,12 +139,42 @@
 		sArray.sort(function(a,b){return a.ct - b.ct});
 		sArray.reverse();
 		console.debug(sArray);
-		for (var i=0; (i < 8 && i < sArray.length); i++) {
+		for (var i=0; (i < 12 && i < sArray.length); i++) {
+			IN.API.Raw("/people/id=" + sArray[i].key  + "/network/updates?scope=self&count=50") // construct REST URL
+				.result( function(value) { 
+					console.debug(value);
+					var key = null;
+					var updateCounts = 0;
+					for(var k = 0; k < value.values.length; k++) {
+						if("CONN" == value.values[k].updateType) {
+							updateCounts++;
+							var person = value.values[k].updateContent.person;
+							if (null == key) key = person.id;
+							var connections = document.getElementById("connections-" + person.id);
+							if (0 == k) connections.innerHTML = "";
+							var img = new Image();
+							img.className = "smallfaceimage";
+							if (undefined == person.connections.values[0].pictureUrl) {
+								img.src = "common/images/ghost_profile.png";
+							} else {
+								img.src = person.connections.values[0].pictureUrl;
+							}
+							connections.appendChild(img);
+						}
+					}
+					document.getElementById('updatecounts-' + key).innerHTML = updateCounts;
+					})
+				.error( function(error) { /* do nothing */ } );
+			
 			var item = document.createElement('li');
 
 			// add picture
 			var img = new Image();
-			img.src = app.persons[sArray[i].key].pictureUrl;
+			if (undefined != app.persons[sArray[i].key].pictureUrl) {
+				img.src = app.persons[sArray[i].key].pictureUrl;
+			} else {
+				img.src = "common/images/ghost_profile.png";
+			}
 			img.className = "activefaceimage";
 			
 //			item.innerHTML = app.persons[sArray[i].key].name;
@@ -162,11 +188,14 @@
 			// add overlay
 			var overlay = document.createElement('div');
 			overlay.className = "overlay";
-			overlay.innerHTML = "<h4>" + app.persons[sArray[i].key].name + " <em><b>" + sArray[i].ct + "</b> updates</em></h4>"
+			overlay.innerHTML = "<h4>" + app.persons[sArray[i].key].name + " <em><b><span id='updatecounts-" + sArray[i].key + "'>" + sArray[i].ct + "</span></b> updates</em></h4>"
 			item.appendChild(overlay);
 			// add connections
 			var connections = document.createElement('div');
 			connections.className = "connections";
+			connections.id = "connections-" + sArray[i].key;
+			connections.innerHTML = "loading...";
+			/*
 			if(undefined != app.persons[sArray[i].key].connections){
 				for (var x=0; x < app.persons[sArray[i].key].connections.length; x++) {
 					var con = app.persons[sArray[i].key].connections[x];
@@ -180,6 +209,7 @@
 					connections.appendChild(smallimage);
 				}
 			}
+			*/
 			item.appendChild(connections);
 			
 			
@@ -250,7 +280,7 @@
 		</section>
 		<section id="home-faces">
 			<div class="container">
-				<h3>Updates in your 1st network</h3>
+				<h3>Recent updates in your 1st network</h3>
 				<div id="faces">
 				</div>
 			</div>
@@ -264,7 +294,7 @@
 		</section>
 		<section id="home-active">
 			<div class="container">
-				<h3>Most active person</h3>
+				<h3>Most actives</h3>
 				<ul id="active-persons" class="person-list">
 				</ul>
 			</div>
