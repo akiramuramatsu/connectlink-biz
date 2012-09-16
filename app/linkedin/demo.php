@@ -88,8 +88,8 @@ try {
   
   // display constants
   $API_CONFIG = array(
-    'appKey'       => '<your application key here>',
-	  'appSecret'    => '<your application secret here>',
+    'appKey'       => '1m4xzx01cl9p',
+	  'appSecret'    => 'Ds8vDpP3u5y1eq51',
 	  'callbackUrl'  => NULL 
   );
   define('DEMO_GROUP', '4010474');
