@@ -13,7 +13,7 @@ $method = OAUTH_HTTP_METHOD_GET;
 // Specify LinkedIn API endpoint to retrieve your own profile
 // http://api.linkedin.com/v1/people/~/network/updates?type=STAT&type=PICT&count=50&start=50
 //$url = "http://api.linkedin.com/v1/people/~";
-$url = "http://api.linkedin.com/v1/people/~/network/updates?type=CONN&count=50&start=50";
+$url = "http://api.linkedin.com/v1/people/~/network/updates?count=250";
 
 // By default, the LinkedIn API responses are in XML format. If you prefer JSON, simply specify the format in your call
 // $url = "http://api.linkedin.com/v1/people/~?format=json";
