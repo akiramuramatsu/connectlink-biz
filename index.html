@@ -27,6 +27,13 @@
 	function onLinkedInAuth() {
 	//	alert("hi");
 		IN.API.Profile("me").result(displayProfiles);
+		/* display block */
+		document.getElementById('home-faces').style.display="block";
+		document.getElementById('home-active').style.display="block";
+		document.getElementById('home-flash').style.display="block";
+		
+		document.getElementById('mainmessage').innerHTML = "<p>Your network is precious.</p>";
+
 	}
 	// 2. Runs when the Profile() API call returns successfully
 	function displayProfiles(profiles) {
@@ -217,9 +224,13 @@
 			</div>
 		</header>
 		<section id="home-top" class="alternate container">
-			<div class="frame">
+			<div id="mainmessage" class="frame">
 				<p>
 				Your network is precious.
+				</p>
+				<p>
+					Please login with linkedin.com account.<br/>
+					<script type="IN/Login"></script>
 				</p>
 			</div>
 			<div class="text">
