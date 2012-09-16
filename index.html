@@ -17,6 +17,7 @@
 <script type="text/javascript">
 	var app = {
 		self: null
+		, persons: {}
 	};
 	// 2. Runs when the JavaScript framework is loaded
 	function onLinkedInLoad() {
@@ -44,12 +45,25 @@
 		
 		var ids = null;
 		var elFaces = document.getElementById("faces");
+		var elFaces2nd = document.getElementById("faces-2nd");
+		var elActivePersons = document.getElementById("active-persons");
      
 		var personIds = new Array();
+		var personIds2nd = new Array();
 		for (var i in updates.values) {
 			var key = updates.values[i].updateKey; // each update has a unique key
 			var conn = updates.values[i].updateContent.person; // the person sharing content
 			console.debug(conn);
+			
+			if (undefined != app.persons[conn.id]) {
+				app.persons[conn.id].ct++;
+			} else {
+				// add to array
+				app.persons[conn.id] = {
+					ct: 1
+					, name: "" + conn.firstName + " " + conn.lastName
+				}
+			}
 			
 			/* ids and picture (pictureUrl) */
 			
@@ -70,7 +84,23 @@
 			if(conn.connections != undefined) {
 				var html = conn.firstName + " " + conn.lastName + " <br/>";
 				for (var n = 0; n < conn.connections.values.length; n++) {
-					html += "&nbsp;&nbsp;" + conn.connections.values[n].firstName + " " + conn.connections.values[n].lastName + ":" + conn.connections.values[n].headline + "<br/>";
+					var p = conn.connections.values[n];
+					html += "&nbsp;&nbsp;" + p.firstName + " " + p.lastName + ":" + p.headline + "<br/>";
+					/* 2nd network faces */
+					if (-1 == personIds2nd.indexOf(p.id)) {
+						// adding face
+						personIds2nd.push(p.id);
+						if (undefined != p.pictureUrl) {
+							var img = new Image();
+							// console.debug(conn.pictureUrl);
+							img.src = p.pictureUrl;
+							img.id = "face-" + p.id;
+							img.className = "faceimage";
+							elFaces2nd.appendChild(img);
+						}
+					}
+					
+					
 				}
 				profileDiv.innerHTML += "<p id='" + key + "'>" + html + "</p>";
 				/*
@@ -83,7 +113,24 @@
 				html += "&nbsp;&nbsp;<span class='important'>" + app.self.firstName + " " + app.self.lastName + " </span><br/>";
 				profileDiv.innerHTML += "<p id='" + key + "'>" + html + "</p>";
 			}
-		}     
+		}// function displayNetworkUpdates
+		/*
+		 * sort
+		 */
+		var sArray = new Array();
+		for (var k in app.persons) {
+			sArray.push({'key':k, ct:app.persons[k].ct});
+		}
+		sArray.sort(function(a,b){return a.ct - b.ct});
+		console.debug(sArray);
+		for (var i=0; i < 4; i++) {
+			var item = document.createElement('li');
+			item.innerHTML = app.persons[sArray[i].key].name;
+			
+			elActivePersons.appendChild(item);
+		}
+		
+		
 	}
 	function displayNetworkUpdatesError(error) {
 		console.debug(error);
@@ -108,7 +155,7 @@
 		</header>
 		<section id="home-top" class="alternate container">
 			<div class="frame">
-				frame here
+				Let's activate your network!
 			</div>
 			<div class="text">
 				アクティブな人をあなたのネットワークから探すお手伝いをします。
@@ -119,11 +166,25 @@
 		</section>
 		<section id="home-faces">
 			<div class="container">
+				<div class="title">1st network</div>
 				<div id="faces">
 				</div>
 			</div>
 		</section>
-		
+		<section id="home-faces-2nd">
+			<div class="container">
+				<div class="title">2nd network</div>
+				<div id="faces-2nd">
+				</div>
+			</div>
+		</section>
+		<section id="home-active">
+			<div class="container">
+				<h3>Active person</h3>
+				<ul id="active-persons" class="person-list">
+				</ul>
+			</div>
+		</section>
 		<div id="wrapper">
 			<div class="container">
 				<div id="networkupdates">
