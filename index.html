@@ -2,7 +2,10 @@
 
 <html>
 	<head>
-		<title>Connect Link</title>
+		<title>ConnectLink</title>
+		<meta name="Description" content="ConnectLink helps improve your social connection. You can easily find a active person in your business network graph.">
+		<meta name="Keywords" content="business, person, network, connection, network graph">
+		<link href="common/css/main.css" media="all" rel="stylesheet" type="text/css">		
 <!-- script -->
 <script type="text/javascript" src="http://platform.linkedin.com/in.js">
   api_key: 1m4xzx01cl9p
@@ -11,6 +14,9 @@
   scope: r_basicprofile r_emailaddress r_network rw_nus
 </script>
 <script type="text/javascript">
+	var app = {
+		self: null
+	};
 	// 2. Runs when the JavaScript framework is loaded
 	function onLinkedInLoad() {
 	     IN.Event.on(IN, "auth", onLinkedInAuth);
@@ -25,8 +31,9 @@
 	     member = profiles.values[0];
 	     document.getElementById("profiles").innerHTML = 
 	          "<p id=\"" + member.id + "\">Hello " +  member.firstName + " " + member.lastName + "</p>";
+	     app.self = member;
 	     IN.API.NetworkUpdates()
-     		.params({"type": "SHAR", "count": 5}) // get the five most-recent Shares
+     		.params({"type": "CONN", "count": 30}) // get the five most-recent Shares
      		.result(displayNetworkUpdates)
      		.error(displayNetworkUpdatesError);
 	}
@@ -36,9 +43,24 @@
      
 		for (var i in updates.values) {
 			var key = updates.values[i].updateKey; // each update has a unique key
-			var share = updates.values[i].updateContent.person; // the person sharing content
-			profileDiv.innerHTML += "<p id='" + key + "'>" + share.firstName + " " + share.lastName 
-			 + " shared " + share.currentShare.comment + ".</p>";
+			var conn = updates.values[i].updateContent.person; // the person sharing content
+			console.debug(conn);
+			if(conn.connections != undefined) {
+				var html = conn.firstName + " " + conn.lastName + " <br/>";
+				for (var n = 0; n < conn.connections.values.length; n++) {
+					html += "&nbsp;&nbsp;" + conn.connections.values[n].firstName + " " + conn.connections.values[n].lastName + ":" + conn.connections.values[n].headline + "<br/>";
+				}
+				profileDiv.innerHTML += "<p id='" + key + "'>" + html + "</p>";
+				/*
+				profileDiv.innerHTML += "<p id='" + key + "'>" + share.firstName + " " + share.lastName 
+				 + " shared " + share.currentShare.comment + ".</p>";
+				 */
+			} else {
+				/* connect to self */
+				var html = conn.firstName + " " + conn.lastName + " <br/>";
+				html += "&nbsp;&nbsp;<span class='important'>" + app.self.firstName + " " + app.self.lastName + " </span><br/>";
+				profileDiv.innerHTML += "<p id='" + key + "'>" + html + "</p>";
+			}
 		}     
 	}
 	function displayNetworkUpdatesError(error) {
@@ -50,18 +72,30 @@
 		
 	</head>
 	<body>
-		<div id="wrapper">
-			<!-- 3. Displays a button to let the viewer authenticate -->
-			<script type="IN/Login">
-				Hello, <?js= firstName ?> <?js= lastName ?>.
-			</script>
-			<!-- 4. Placeholder for the greeting -->
-			<div id="profiles">
-				
+		<header class="main">
+			<div class="container">
+				<div class="logo">ConnectLink.biz</div>
+				<div class="elements">
+					<!-- 3. Displays a button to let the viewer authenticate -->
+					<script type="IN/Login"></script>
+					<!-- 4. Placeholder for the greeting -->
+					<div id="profiles">
+					</div>
+				</div>
 			</div>
-			<div id="networkupdates">
-				
+		</header>
+		<div id="wrapper">
+			<div class="container">
+				<div id="networkupdates">
+					
+				</div>
 			</div>
 		</div>
+		
+		<footer class="main">
+			<div class="container">
+			</div>
+		</footer>
+		
 	</body>
 </html>
