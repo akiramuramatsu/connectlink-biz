@@ -47,6 +47,69 @@ header.main .elements {
 	color: white;
 }
 
+#home-top {
+	margin-bottom: 35px;
+	margin-top: 30px;
+	
+	overflow: hidden;
+	margin: 40px auto 59px;
+	width: 960px;
+	padding: 0;
+}
+
+#home-top .frame {
+	float: left;
+	background-color: white;
+	width: 537px;
+	height: 330px;
+	
+	border: 1px solid #AAA;
+}
+
+#home-top .text {
+	float: left;
+	margin: 32px 0 0 20px;
+	width: 470px;
+	color: #555;
+	
+	font-size: 14px;
+}
+
+#home-top .right {
+	margin-left: 570px;
+	float: none;
+
+	color: #555;
+	font-size: 14px;
+}
+
+#home-faces {
+	margin: 0;
+	background: #E5E5E5;
+	height: 215px;
+	-moz-box-shadow: inset 2px 2px 1px rgba(0,0,0,0.18);
+	-webkit-box-shadow: inset 2px 2px 1px rgba(0, 0, 0, 0.18);
+	box-shadow: inset 2px 2px 1px rgba(0, 0, 0, 0.18);
+	border-bottom: 1px solid #EAEAEA;
+}
+
+#faces {
+	margin: 10px;
+}
+
+#faces .faceimage {
+	margin-right: 5px;
+	margin-top: 5px;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+	
+	-moz-box-shadow:    3px 3px 5px 3px #ccc;
+	-webkit-box-shadow: 3px 3px 5px 3px #ccc;
+	box-shadow:         3px 3px 5px 3px #ccc;
+}
+
 footer.main {
 	display: block;
 	margin: 0 auto;

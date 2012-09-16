@@ -3,6 +3,7 @@
 <html>
 	<head>
 		<title>ConnectLink</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="Description" content="ConnectLink helps improve your social connection. You can easily find a active person in your business network graph.">
 		<meta name="Keywords" content="business, person, network, connection, network graph">
 		<link href="common/css/main.css" media="all" rel="stylesheet" type="text/css">		
@@ -33,18 +34,39 @@
 	          "<p id=\"" + member.id + "\">Hello " +  member.firstName + " " + member.lastName + "</p>";
 	     app.self = member;
 	     IN.API.NetworkUpdates()
-     		.params({"type": "CONN", "count": 30}) // get the five most-recent Shares
+     		.params({"type": "CONN", "count": 100}) // get the five most-recent Shares
      		.result(displayNetworkUpdates)
      		.error(displayNetworkUpdatesError);
 	}
 	function displayNetworkUpdates(updates) {
 		console.debug(updates);
 		var profileDiv = document.getElementById("networkupdates");
+		
+		var ids = null;
+		var elFaces = document.getElementById("faces");
      
+		var personIds = new Array();
 		for (var i in updates.values) {
 			var key = updates.values[i].updateKey; // each update has a unique key
 			var conn = updates.values[i].updateContent.person; // the person sharing content
 			console.debug(conn);
+			
+			/* ids and picture (pictureUrl) */
+			
+			if (-1 == personIds.indexOf(conn.id)) {
+				personIds.push(conn.id);
+				// avoid error in case of undefined pictureUrl
+				if (undefined != conn.pictureUrl) {
+					var img = new Image();
+					// console.debug(conn.pictureUrl);
+					img.src = conn.pictureUrl;
+					img.id = "face-" + conn.id;
+					img.className = "faceimage";
+					elFaces.appendChild(img);
+				}
+			}
+			// console.debug(personIds);
+			
 			if(conn.connections != undefined) {
 				var html = conn.firstName + " " + conn.lastName + " <br/>";
 				for (var n = 0; n < conn.connections.values.length; n++) {
@@ -84,6 +106,24 @@
 				</div>
 			</div>
 		</header>
+		<section id="home-top" class="alternate container">
+			<div class="frame">
+				frame here
+			</div>
+			<div class="text">
+				アクティブな人をあなたのネットワークから探すお手伝いをします。
+			</div>
+			<div class="right">
+				2012年9月 試験運用を開始しました。
+			</div>
+		</section>
+		<section id="home-faces">
+			<div class="container">
+				<div id="faces">
+				</div>
+			</div>
+		</section>
+		
 		<div id="wrapper">
 			<div class="container">
 				<div id="networkupdates">
