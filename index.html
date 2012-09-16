@@ -45,6 +45,13 @@
      		.params({"type": "CONN", "count": 100, "start": 0}) // get the five most-recent Shares
      		.result(displayNetworkUpdates)
      		.error(displayNetworkUpdatesError);
+     		
+		IN.API.Raw("/people/~/network/updates?type=CONN&count=50&start=0") // construct REST URL
+			.result( function(updates) {
+				console.debug(updates);
+			})
+			.error( function(error) { /* do nothing */ } );
+      
 	}
 	function displayNetworkUpdates(updates) {
 		console.debug(updates);
