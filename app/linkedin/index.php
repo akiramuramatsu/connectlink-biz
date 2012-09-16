@@ -5,47 +5,20 @@ $oauth->enableDebug();
 
 $oauth->setToken( 'f11d674d-ea91-417b-ab25-81718d436675', '811d78dd-ca92-4b5c-86a0-9bbb64b3271b' );	 // user's access token/secret
 
-$data = <<< EOB
-<?xml version="1.0" encoding="UTF-8"?>
-<share>
-<comment>Test</comment>
-<content>
-<title>Testing Share Function</title>
-<description>Sharing some information on LinkedIn</description>
-<submitted-url>http://example.com</submitted-url>
-</content>
-<visibility>
-<code>anyone</code>
-</visibility>
-</share>
-EOB;
 
-$url = 'http://api.linkedin.com/v1/people/~/shares';
+$params = array();
+$headers = array();
+$method = OAUTH_HTTP_METHOD_GET;
 
-$headers = array(
-'Content-Type' => 'application/xml',
-'x-li-format' => 'json'
-);
+// Specify LinkedIn API endpoint to retrieve your own profile
+$url = "http://api.linkedin.com/v1/people/~";
 
-try {
+// By default, the LinkedIn API responses are in XML format. If you prefer JSON, simply specify the format in your call
+// $url = "http://api.linkedin.com/v1/people/~?format=json";
 
-$oauth->fetch( $url, array($data), OAUTH_HTTP_METHOD_POST, $headers );
+// Make call to LinkedIn to retrieve your own profile
+$oauth->fetch($url, $params, $method, $headers);
 
-$response = json_decode( $oauth->getLastResponse() );
-
-$response->response_info = (object) $oauth->getLastResponseInfo();
-
-$response->success = ($response->response_info->http_code == 200);
-
-} catch ( OAuthException $e ) {
-
-echo "ERROR:\n";
-print_r($e->getMessage()) . "\n";
-print_r($oauth->debugInfo) . "\n";
-die();
-
-}
-
-print_r($response);
+echo $oauth->getLastResponse();
 
 ?>
