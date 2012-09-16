@@ -7,6 +7,7 @@ body {
 	margin:0;
 	padding:0;
 	background: white url(../images/background.png) repeat;
+	line-height: 1.4;
 }
 
 ul li {
@@ -51,6 +52,8 @@ header.main .elements {
 }
 
 #home-top {
+	font-family: "Helvetica Neue",Arial,sans-serif;
+	
 	margin-bottom: 35px;
 	margin-top: 30px;
 	
@@ -68,12 +71,15 @@ header.main .elements {
 	
 	border: 1px solid #AAA;
 }
+#home-top .frame p {
+	margin: 20px 50px;
+}
 
 #home-top .text {
 	float: left;
 	margin: 32px 0 0 20px;
 	width: 470px;
-	color: #555;
+	color: #222;
 	
 	font-size: 14px;
 }
@@ -96,7 +102,17 @@ header.main .elements {
 	border-bottom: 1px solid #EAEAEA;
 }
 
+#home-faces h3 {
+	margin: 0 0 10px;
+	font-size: 20px;
+	font-weight: bold;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+	color: #3D3D3D;
+}
+
+
 #home-faces-2nd {
+	display: none;
 	margin: 0;
 	background: #EEEEEE;
 	height: 215px;
@@ -115,6 +131,7 @@ header.main .elements {
 #faces {
 	margin: 10px;
 }
+
 #faces-2nd {
 	margin: 10px;
 }
@@ -132,6 +149,32 @@ header.main .elements {
 	box-shadow:         3px 3px 5px 3px #ccc;
 }
 
+.activefaceimage {
+	margin: 5px;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+	
+	-moz-box-shadow:    3px 3px 5px 3px #ccc;
+	-webkit-box-shadow: 3px 3px 5px 3px #ccc;
+	box-shadow:         3px 3px 5px 3px #ccc;
+}
+
+.smallfaceimage {
+	margin: 2px;
+	
+	width: 20px;
+	height: 20px;
+	
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;	
+	
+	-moz-box-shadow:    1px 1px 2px 1px #ccc;
+	-webkit-box-shadow: 1px 1px 2px 1px #ccc;
+	box-shadow:         1px 1px 2px 1px #ccc;
+}
 #home-active {
 	padding: 45px 0;
 	overflow: hidden;
@@ -165,6 +208,8 @@ header.main .elements {
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
+
+	cursor: pointer;
 }
 
 .person-list li .overlay {
@@ -182,6 +227,59 @@ header.main .elements {
 	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0.0,rgba(0, 0, 0, 0.9)),color-stop(1,rgba(0, 0, 0, 0.75)));
 }
 
+.person-list li .selfinfo {
+	position: absolute;
+	left: 90px;
+	top: 5px;
+	width: 120px;
+	
+	font-size: 12px;
+}
+
+.person-list li .connections {
+	position: absolute;
+	left: 0px;
+	top: 90px;
+	width: 100%;
+	font-size: 12px;
+}
+
+.person-list li .overlay h4 {
+	margin: 15px 15px 0;
+	font-size: 18px;
+	font-weight: bold;
+	color: #009FEA;
+	line-height: 1.4;
+	text-shadow: 0 1px 1px black;
+}
+
+.person-list li .overlay h4 em {
+	display: block;
+	font-size: 14px;
+	font-weight: normal;
+	font-style: normal;
+	color: white;
+}
+
+#wrapper {
+	display: none;
+}
+
+#home-flash {
+	margin: 0;
+	padding: 35px 0 30px;
+	background-color: white;
+	box-shadow: inset 0 1px 5px #AAA;
+	-webkit-box-shadow: inset 0 1px 5px #AAA;
+	-moz-box-shadow: inset 0 1px 5px #aaa;
+}
+#home-flash h3 {
+	margin: 0 0 15px;
+	font-size: 20px;
+	font-weight: bold;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+	color: #000088;
+}
 footer.main {
 	display: block;
 	margin: 0 auto;
