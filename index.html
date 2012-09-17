@@ -72,7 +72,15 @@
 				connections.appendChild(img);
 			}
 		}
+		app.persons[key].ct = updateCounts;
 		document.getElementById('updatecounts-' + key).innerHTML = updateCounts;
+		
+		/*
+		 * initialize event
+		 * TODO refactoring
+		 */
+		document.getElementById('active-sort-button').addEventListener("click", sortActives, false);
+
 		return key;
 	}
 	
@@ -83,7 +91,6 @@
 		var ids = null;
 		var elFaces = document.getElementById("faces");
 		var elFaces2nd = document.getElementById("faces-2nd");
-		var elActivePersons = document.getElementById("active-persons");
      
 		var personIds = new Array();
 		var personIds2nd = new Array();
@@ -165,7 +172,31 @@
 		}
 		sArray.sort(function(a,b){return a.ct - b.ct});
 		sArray.reverse();
-		console.debug(sArray);
+//		console.debug(sArray);
+
+		displayActivePerson(sArray);
+	}
+	function displayNetworkUpdatesError(error) {
+		console.debug(error);
+		alert("error occurred");
+	}
+	function sortActives() {
+		var sArray = new Array();
+		for (var k in app.persons) {
+			sArray.push({'key':k, ct:app.persons[k].ct});
+		}
+		sArray.sort(function(a,b){return a.ct - b.ct});
+		sArray.reverse();
+		
+		var elActivePersons = document.getElementById("active-persons");
+		while(elActivePersons.firstChild){
+		    elActivePersons.removeChild(elActivePersons.firstChild);
+		}
+		displayActivePerson(sArray);
+	}
+	
+	function displayActivePerson(sArray) {
+		var elActivePersons = document.getElementById("active-persons");
 		for (var i=0; (i < 12 && i < sArray.length); i++) {
 			// check localstorage for cache
 			var cachedObj = null, utilizeCacheFlag = false;
@@ -203,6 +234,8 @@
 						})
 					.error( function(error) { /* do nothing */ } );
 			}
+			
+			
 			
 			var item = document.createElement('li');
 
@@ -250,8 +283,6 @@
 			*/
 			item.appendChild(connections);
 			
-			
-			
 			item.dataset.id = sArray[i].key;
 			item.addEventListener("click", function(e){
 				window.open(app.persons[this.dataset.id].profileUrl, "_blank");
@@ -264,13 +295,7 @@
 				// console.debug("cache used for " + sArray[i].key);
 				displayPersonDetail(cachedObj.value);
 			}
-			
-			
-		}
-	}
-	function displayNetworkUpdatesError(error) {
-		console.debug(error);
-		alert("error occurred");
+		}		
 	}
 </script>
 
@@ -338,7 +363,8 @@
 		</section>
 		<section id="home-active">
 			<div class="container">
-				<h3>Most actives</h3>
+				<h3 class="left">Most actives</h3>
+				<h3 id="active-sort-button" class="right button"><button>sort</button></h3>
 				<ul id="active-persons" class="person-list">
 				</ul>
 			</div>
