@@ -49,6 +49,33 @@
 	function displayNetworkUpdates2(updates) {
 		console.debug("updates2=" + updates);
 	}
+	
+	function displayPersonDetail(value) {
+		console.debug(value);
+		
+		var key = null;
+		var updateCounts = 0;
+		for(var k = 0; k < value.values.length; k++) {
+			if("CONN" == value.values[k].updateType) {
+				updateCounts++;
+				var person = value.values[k].updateContent.person;
+				if (null == key) key = person.id;
+				var connections = document.getElementById("connections-" + person.id);
+				if (0 == k) connections.innerHTML = "";
+				var img = new Image();
+				img.className = "smallfaceimage";
+				if (undefined == person.connections.values[0].pictureUrl) {
+					img.src = "common/images/ghost_profile.png";
+				} else {
+					img.src = person.connections.values[0].pictureUrl;
+				}
+				connections.appendChild(img);
+			}
+		}
+		document.getElementById('updatecounts-' + key).innerHTML = updateCounts;
+		return key;
+	}
+	
 	function displayNetworkUpdates(updates) {
 		console.debug(updates);
 		var profileDiv = document.getElementById("networkupdates");
@@ -140,31 +167,42 @@
 		sArray.reverse();
 		console.debug(sArray);
 		for (var i=0; (i < 12 && i < sArray.length); i++) {
-			IN.API.Raw("/people/id=" + sArray[i].key  + "/network/updates?scope=self&count=50") // construct REST URL
-				.result( function(value) { 
-					console.debug(value);
-					var key = null;
-					var updateCounts = 0;
-					for(var k = 0; k < value.values.length; k++) {
-						if("CONN" == value.values[k].updateType) {
-							updateCounts++;
-							var person = value.values[k].updateContent.person;
-							if (null == key) key = person.id;
-							var connections = document.getElementById("connections-" + person.id);
-							if (0 == k) connections.innerHTML = "";
-							var img = new Image();
-							img.className = "smallfaceimage";
-							if (undefined == person.connections.values[0].pictureUrl) {
-								img.src = "common/images/ghost_profile.png";
-							} else {
-								img.src = person.connections.values[0].pictureUrl;
+			// check localstorage for cache
+			var cachedObj = null, utilizeCacheFlag = false;
+			if (undefined != localStorage[sArray[i].key] && null != localStorage[sArray[i].key]) {
+				// console.debug("cache found for " + sArray[i].key);
+				cachedObj = JSON.parse(localStorage[sArray[i].key]);
+				
+				if(cachedObj.expire > new Date().getTime()) {
+					utilizeCacheFlag = true;
+				}
+			}
+			
+			/*
+			 * if cache is null, then call API to get person update detail
+			 */
+			if (!utilizeCacheFlag) {
+				IN.API.Raw("/people/id=" + sArray[i].key  + "/network/updates?scope=self&count=50") // construct REST URL
+					.result( function(value) { 
+						console.debug(value);
+						
+						var key = displayPersonDetail(value);
+						
+						// save to localstorage
+						if(typeof(Storage)!=="undefined") {
+							var vv = {
+								expire: (new Date().getTime()) + 1000 * 60 * 2,
+								value: value
 							}
-							connections.appendChild(img);
+							localStorage[key] = JSON.stringify(vv);
+						} else {
+							console.debug("no local storage");
 						}
-					}
-					document.getElementById('updatecounts-' + key).innerHTML = updateCounts;
-					})
-				.error( function(error) { /* do nothing */ } );
+	
+	
+						})
+					.error( function(error) { /* do nothing */ } );
+			}
 			
 			var item = document.createElement('li');
 
@@ -220,9 +258,15 @@
 			}, false)
 			
 			elActivePersons.appendChild(item);
+			
+			// draw person detail from cache
+			if (utilizeCacheFlag) {
+				// console.debug("cache used for " + sArray[i].key);
+				displayPersonDetail(cachedObj.value);
+			}
+			
+			
 		}
-		
-		
 	}
 	function displayNetworkUpdatesError(error) {
 		console.debug(error);
