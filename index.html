@@ -41,6 +41,7 @@
 	     document.getElementById("profiles").innerHTML = 
 	          "<p id=\"" + member.id + "\">Hello " +  member.firstName + " " + member.lastName + "</p>";
 	     app.self = member;
+	     console.debug("calling IN.API.NetworkUpdates()");
 	     IN.API.NetworkUpdates()
      		.params({"type": "CONN", "count": 100, "start": 0}) // get the five most-recent Shares
      		.result(displayNetworkUpdates)
@@ -213,6 +214,7 @@
 			 * if cache is null, then call API to get person update detail
 			 */
 			if (!utilizeCacheFlag) {
+				console.debug("calling IN.API.Raw()");
 				IN.API.Raw("/people/id=" + sArray[i].key  + "/network/updates?scope=self&count=50") // construct REST URL
 					.result( function(value) { 
 						console.debug(value);
@@ -371,7 +373,7 @@
 		</section>
 		<section id="home-flash">
 			<div class="container">
-				<h3>Flash cards (coming soon)</h3>
+				<h3>Team building (coming soon)</h3>
 			</div>
 		</section>
 		<div id="wrapper">
