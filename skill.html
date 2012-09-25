@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>ConnectLink</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="Description" content="ConnectLink helps improve your social connection. You can easily find a active person in your business network graph.">
+		<meta name="Keywords" content="business, person, network, connection, network graph">
+		<link href="common/css/main.css" media="all" rel="stylesheet" type="text/css">		
+
+		<!-- Core + Skin CSS --> 
+		<link rel="stylesheet" type="text/css" href="common/css/yui-carousel.css">
+ 
+
+<!-- script -->
+<!-- Dependencies --> 
+<script src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/element/element-min.js"></script>
+ 
+<!-- Optional: Animation library for animating the scrolling of items --> 
+<script src="http://yui.yahooapis.com/2.9.0/build/animation/animation-min.js"></script>
+<!-- Optional: Connection library for dynamically loading items --> 
+<script src="http://yui.yahooapis.com/2.9.0/build/connection/connection-min.js"></script>
+ 
+<!-- Source file --> 
+<script src="http://yui.yahooapis.com/2.9.0/build/carousel/carousel-min.js"></script>
+
+
+
+<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+  api_key: 1m4xzx01cl9p
+  onLoad: onLinkedInLoad
+  authorize: true
+  scope: r_fullprofile r_emailaddress r_network rw_nus
+</script>
+<script type="text/javascript">
+	var app = {
+		self: null
+		, persons: {}
+		, skills: []
+		, index: 0
+	};
+	// 2. Runs when the JavaScript framework is loaded
+	function onLinkedInLoad() {
+	     IN.Event.on(IN, "auth", onLinkedInAuth);
+	}
+	// 2. Runs when the viewer has authenticated
+	function onLinkedInAuth() {
+	//	alert("hi");
+		//IN.API.Profile(["me","EXoRExiucc","Wm8wX2CeBk"]).fields(["first-name","last-name","headline","skills","languages"]).result(displayProfiles);
+		//IN.API.Connections("me").fields(["id","first-name","last-name","headline","skills"]).result(displayConnections);
+
+	}
+	// 2. Runs when the Profile() API call returns successfully
+	function displayProfiles(profiles) {
+		console.debug(profiles);
+	     member = profiles.values[0];
+	     document.getElementById("profiles").innerHTML = 
+	          "<p id=\"" + member.id + "\">Hello " +  member.firstName + " " + member.lastName + "</p>";
+	     app.self = member;
+	}
+	
+	function displayConnections(connections) {
+		//console.debug(connections);
+	}
+	
+	function displaySearchResult(result) {
+		// initialize and create node 
+		var elContainer = document.createElement('div');
+		elContainer.dataset.skill = app.skills[app.index];
+		elContainer.className = "container yui-skin-sam";
+		elContainer.id = "container-" + app.skills[app.index];
+		
+		var elContainerHeader = document.createElement('h3');
+		elContainerHeader.innerHTML="" + app.skills[app.index];
+		elContainer.appendChild(elContainerHeader);
+		
+		console.debug(result);
+		
+		var elDiv = document.createElement('div');
+		elDiv.id = "con-" + app.skills[app.index];
+		elDiv.className = "yui3-carousel-loading";
+		
+		var persons = result.people.values;
+		var elPersons = document.createElement('ul');
+		elPersons.className = "person-list";
+		elPersons.id="persons-" + app.skills[app.index];
+		
+		elDiv.appendChild(elPersons);
+		
+		
+		for (var i=0; i < persons.length && i < 16; i++) {
+			var item = document.createElement('li');
+
+			// add picture
+			var img = new Image();
+			if (undefined != persons[i].pictureUrl) {
+				img.src = persons[i].pictureUrl;
+			} else {
+				img.src = "common/images/ghost_profile.png";
+			}
+			img.className = "activefaceimage";
+			
+//			item.innerHTML = persons[i].name;
+			
+			item.appendChild(img);
+
+			var self = document.createElement('div');
+			self.className = "selfinfo";
+			self.innerHTML = persons[i].headline;
+			item.appendChild(self);
+			// add overlay
+			var overlay = document.createElement('div');
+			overlay.className = "overlay";
+			overlay.innerHTML = "<h4>" + persons[i].firstName + " " + persons[i].lastName + " <em><b><span id='updatecounts-" + persons[i].id + "'>" + persons[i].numConnections + "</span></b> connections</em>" 
+				+ "<em>" + (persons[i].distance == 1 ? "1st" : "2nd") + "</em></h4>"
+			item.appendChild(overlay);
+			
+			item.dataset.id = persons[i].id;
+			
+			
+			if(undefined != persons[i].siteStandardProfileRequest) {
+				app.persons[persons[i].id] = {
+					profileUrl: persons[i].siteStandardProfileRequest.url
+				};
+				item.addEventListener("click", function(e){
+					window.open(app.persons[this.dataset.id].profileUrl, "_blank");
+				}, false)
+
+			} else {
+				app.persons[persons[i].id] = {
+					profileUrl: null
+				};
+			}
+
+			elPersons.appendChild(item);			
+		}
+		//elContainer.appendChild(elPersons);
+		elContainer.appendChild(elDiv);
+		
+		document.getElementById("skill-search").appendChild(elContainer);
+		
+		// setup YUI carousel
+		var carousel = new YAHOO.widget.Carousel(elDiv.id, {
+		    //isCircular: true // for a circular Carousel
+		    carouselEl: "UL"
+		});
+		carousel.set("numVisible", 4);
+		carousel.set("animation", { speed: 0.5 });
+		carousel.render();
+		carousel.show(); // display the widget (redundant from 2.8.0), but use if carousel.hide() has been run previously.		
+		
+		// search next
+		if(app.index < app.skills.length - 1){
+			app.index++;
+			IN.API.PeopleSearch().fields(["id","first-name","last-name","headline","distance","picture-url","industry","num-connections","positions","public-profile-url","site-standard-profile-request"]).params({"keywords":app.skills[app.index], "sort":"distance", "count":"16" }).result(displaySearchResult);
+		}
+	}
+	
+	
+	window.onload = function(){
+		var button = document.getElementById("button_add_skill").addEventListener("click",function(e){
+			e.preventDefault();
+			// adding a skill to list
+			//console.debug(document.getElementById("skillname").value);
+			var skillname = document.getElementById("skillname").value;
+			var skilllist = document.getElementById("skilllist");
+			
+			var li = document.createElement('li');
+			li.innerHTML = skillname;
+			skilllist.appendChild(li);
+			
+			// clear input box
+			document.getElementById("skillname").value = "";
+		}, false);
+		document.getElementById("button_search").addEventListener("click",function(e){
+			// remove skills
+			app.skills = [];
+			var nodes = document.getElementById("skilllist").childNodes;
+			for (var i=0; i<nodes.length; i++){
+				// push skills to global array
+				app.skills.push(nodes[i].innerHTML);
+			}
+			// remove search results
+			var toBeDeleted = document.getElementById("skill-search");
+			while(toBeDeleted.firstChild){
+			    toBeDeleted.removeChild(toBeDeleted.firstChild);
+			}
+
+			
+			app.index = 0;
+			IN.API.PeopleSearch().fields(["id","first-name","last-name","headline","distance","picture-url","industry","num-connections","positions","public-profile-url","site-standard-profile-request","summary","specialties"]).params({"keywords":app.skills[app.index], "sort":"distance", "count":"16"  }).result(displaySearchResult);
+		}, false);
+	}
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34858825-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- /script -->
+		
+	</head>
+	<body>
+		<header class="main">
+			<div class="container">
+				<div class="logo">ConnectLink.biz</div>
+				<div class="elements">
+					<!-- 3. Displays a button to let the viewer authenticate -->
+					<script type="IN/Login"></script>
+					<!-- 4. Placeholder for the greeting -->
+					<div id="profiles">
+					</div>
+				</div>
+			</div>
+		</header>
+		<section id="home-top" class="alternate container">
+			<div id="mainmessage" class="frame">
+				<p>Your privacy is protected.</p>
+				<p>
+				ConnectLink.biz does not retrieve any of your information like email, user id nor password.
+				It means that we never send your information to ConnectLink.biz's servers. Your data is transferred between your browser and Linkedin servers.
+				Skillset is stored only on your browser.
+				</p>
+			</div>
+			<div class="text">
+			</div>
+			<div class="right">
+				Add skills to Skillset. 
+				<div>
+					<form>
+						<input id="skillname" type="text" value="" /><button id="button_add_skill">add</button>
+					</form>
+				</div>
+				<div>
+					Skillset:
+					<ul id="skilllist"></ul>
+					<button id="button_search">search in my network</button>
+				</div>
+			</div>
+		</section>
+		
+		<section id="skill-search" class="section">
+		</section>
+		<footer class="main">
+			<div class="container">
+			</div>
+		</footer>
+	</body>
+
+
+<script type="text/javascript">
+</script>
+
+</html>
