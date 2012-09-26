@@ -294,7 +294,6 @@ header.main #profiles {
 	line-height: 1.4;
 	text-shadow: 0 1px 1px black;
 }
-
 .person-list li .overlay h4 em {
 	display: block;
 	font-size: 14px;
@@ -302,11 +301,9 @@ header.main #profiles {
 	font-style: normal;
 	color: white;
 }
-
 #wrapper {
 	display: none;
 }
-
 #home-flash {
 	display: none;
 	margin: 0;
@@ -333,4 +330,20 @@ footer.main {
 	background-color: #232323;
 	background: -webkit-gradient(linear, left top, left bottom, from(#232323), to(#2D2D2D));
 	background: -moz-linear-gradient(top, #990, #066);
+}
+
+.section {
+	margin: 0;
+	padding: 35px 0 30px;
+	background-color: white;
+	box-shadow: inset 0 1px 5px #AAA;
+	-webkit-box-shadow: inset 0 1px 5px #AAA;
+	-moz-box-shadow: inset 0 1px 5px #aaa;
+}
+.section h3 {
+	margin: 0 0 15px;
+	font-size: 20px;
+	font-weight: bold;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+	color: #000088;
 }
