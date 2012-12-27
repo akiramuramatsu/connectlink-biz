@@ -11,10 +11,123 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
 
+
+<script type="text/javascript" src="common/scripts/lib/ox.ajast.js"></script>
+<script type="text/javascript" src="common/scripts/lib/KalturaClientBase.js"></script>
+<script type="text/javascript" src="common/scripts/lib/webtoolkit.md5.js"></script>
+<script type="text/javascript" src="common/scripts/lib/KalturaVO.js"></script>
+<script type="text/javascript" src="common/scripts/lib/KalturaTypes.js"></script>
+<script type="text/javascript" src="common/scripts/lib/KalturaServices.js"></script>
+<script type="text/javascript" src="common/scripts/lib/KalturaClient.js"></script>
+
+<script type="text/javascript" src="common/scripts/lib/jsonxml/json2xml.js"></script>
+<script type="text/javascript" src="common/scripts/lib/jsonxml/xml2json.js"></script>
+
+
+<script type="text/javascript">
+<!--
+//NOTE:-if you use CE you must edit the hard-coded url in KalturaClientBase.js to your CE url
+//You should put these next three variables in a seperate include for ease of use
+var Secret = "2438d8cf90d9f9673deb166bbeb04fa9"
+var PartnerID = 1193621;  //note it is type integer
+var UserID = "akira@connectlinkcorp.com";
+//Initialize the Kaltura module 
+var config = new KalturaConfiguration(PartnerID);
+var client = new KalturaClient(config);
+var ks;
+
+var xmlDoc=document.implementation.createDocument("","",null);
+xmlDoc.async=false;
+
+function displayFlashWindow()
+{
+        //used to open KCW, but can be used to continue anything else you need in the API
+        client.setKs(ks);  //not needed for KCW but good practice to do anyway          
+//
+//...
+//
+}
+client.session.start(GetKs, Secret, UserID, KalturaSessionType.USER);
+
+
+
+function GetKs(success, data) 
+{
+        console.debug(success);
+        console.debug(data);
+        ks = data;
+        client.setKs(ks);
+        //sent to a new window via a timeout as a workaround for a known IE bug
+//        setTimeout("displayFlashWindow()", 5);
+        
+// get playlist KalturaPlaylistService.prototype.get = function(callback, id, version){
+client.playlist.get(function(success, data){
+	console.debug(data);
+	var dom = parseXml(data.playlistContent);
+	var json = xml2json(dom);
+	console.debug(json);
+	
+	var results = client.playlist.execute(function(success, data){
+		console.debug("*************** playlist ********************:");
+		console.debug (data);
+		
+		var videos = document.getElementById("videos");
+		
+		
+		for (var i = 0; i < data.length; i++){
+			var li = document.createElement("li");
+			//li.innerHTML = "";
+			var a = document.createElement("a");
+			a.href = data[i].dataUrl;
+			
+			var img = new Image();
+			img.src = data[i].thumbnailUrl;
+
+			a.appendChild(img);
+			li.appendChild(a);
+			videos.appendChild(li);
+		}
+		
+	}, '0_5chqtrcj');
+	
+	
+//	alert('hello');
+},'0_5chqtrcj');
+        
+        
+}
+
+
+function parseXml(xml) {
+   var dom = null;
+   if (window.DOMParser) {
+      try { 
+         dom = (new DOMParser()).parseFromString(xml, "text/xml"); 
+      } 
+      catch (e) { dom = null; }
+   }
+   else if (window.ActiveXObject) {
+      try {
+         dom = new ActiveXObject('Microsoft.XMLDOM');
+         dom.async = false;
+         if (!dom.loadXML(xml)) // parse error ..
+
+            window.alert(dom.parseError.reason + dom.parseError.srcText);
+      } 
+      catch (e) { dom = null; }
+   }
+   else
+      alert("cannot parse xml string!");
+   return dom;
+}
+
+-->
+</script>
+
 	</head>
 	<body>
 		daily steak video test
-
+		<div id="videos"></div>
 		
 	</body>
 </html>
