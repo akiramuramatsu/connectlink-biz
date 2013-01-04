@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MathJax Dynamic Math Test Page</title>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [["$","$"],["\\(","\\)"]]
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+</head>
+<body>
+
+<script>
+  //
+  //  Use a closure to hide the local variables from the
+  //  global namespace
+  //
+  var i = 0;
+  (function () {
+    var QUEUE = MathJax.Hub.queue;  // shorthand for the queue
+    var math = null;                // the element jax for the math output.
+   var math2 = null;                // the element jax for the math output.
+
+    //
+    //  Get the element jax when MathJax has produced it.
+    //
+    QUEUE.Push(function () {
+      math = MathJax.Hub.getAllJax("MathOutput")[0];
+    });
+    QUEUE.Push(function () {
+      math2 = MathJax.Hub.getAllJax("MathOutput2")[0];
+    });
+
+    //
+    //  The onchange event handler that typesets the
+    //  math entered by the user
+    //
+    window.UpdateMath = function (TeX) {
+      QUEUE.Push(["Text",math,"\\displaystyle{"+TeX+"}"]);
+    }
+    
+    setInterval(function(){
+    	i++;
+    	console.debug(i);
+		QUEUE.Push(["Text",math,"\\displaystyle{\\frac{"+ i+"}{5}}"]);
+		QUEUE.Push(["Text",math2,"\\displaystyle{\\frac{"+ i+"}{10}}"]);
+    },1000);
+  })();
+</script>
+
+Type some TeX code:
+<input id="MathInput" size="50" onchange="UpdateMath(this.value)" />
+<p>
+
+<div id="MathOutput">
+You typed: ${x_2 3}$
+</div>
+<div id="MathOutput2">
+You typed: ${x_2 3}$
+</div>
+
+</body>
+</html>
