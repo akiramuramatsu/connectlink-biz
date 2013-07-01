@@ -28,7 +28,9 @@ class Mixpanel
         $params['format'] = $format;
         
         if (!isset($params['expire'])) {
-            $current_utc_time = time() - date('Z');
+        	date_default_timezone_set("UTC");
+            // $current_utc_time = time() - date('Z');
+            $current_utc_time = time();
             $params['expire'] = $current_utc_time + 600; // Default 10 minutes
         }
         
