@@ -9,8 +9,8 @@ $data = $mp->request(array('events', 'properties'), array(
     'name' => 'page',
     'type' => 'general',
     'unit' => 'month',
-    'interval' => '20',
-    'limit' => '20'
+    'interval' => '12',
+    'limit' => '12'
 ));
 
 var_dump($data);
