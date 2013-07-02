@@ -30,8 +30,7 @@ foreach (get_object_vars($data->data->values->{'study completed'}) as $key => $v
 
 $data_device = $mp->request(array('events','properties'), array(
     'event' => 'the first launch',
-    'name' => 'OS Version',
-    'values'=> array('4.0.4','2.3.6','4.1.2','4.1.1','4.0.3','4.2.2','2.3.4','2.3.5'),
+    'name' => 'Os Version',
     'type' => 'general',
     'unit' => 'month',
     'interval' => '12',
