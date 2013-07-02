@@ -5,7 +5,7 @@ $api_secret = '5514393a22a43ba7437c9ccc385bc0d8';
 
 $mp = new Mixpanel($api_key, $api_secret);
 $data = $mp->request(array('events'), array(
-    'event' => 'launch study app',
+    'event' => array('launch study app'),
     'type' => 'general',
     'unit' => 'month',
     'interval' => '12',
