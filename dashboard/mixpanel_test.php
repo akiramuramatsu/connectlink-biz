@@ -130,7 +130,7 @@ foreach ($total_data_os as $key2 => $value2) {
         	,'titleTextStyle' : {color: 'white', fontSize:25}
         	,'tooltip': {textStyle: {color: 'white', fontSize:25}}
         	,'pieSliceTextStyle': {color: 'white'}
-        	,'legend': {textStyle:{color: 'white', fontSize:25}}
+        	,'legend': {textStyle:{color: 'white', fontSize:14}}
         };
 
         // Instantiate and draw our chart, passing in some options.
