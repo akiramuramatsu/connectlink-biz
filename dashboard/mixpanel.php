@@ -45,6 +45,8 @@ class Mixpanel
         
         $uri = '/' . $this->version . '/' . join('/', $methods) . '/';
         $request_url = $uri . '?sig=' . $sig . $param_query;
+		
+		echo "<!--".$request_url."-->\n";
         
         $curl_handle=curl_init();
         curl_setopt($curl_handle, CURLOPT_URL, $this->api_url . $request_url);
