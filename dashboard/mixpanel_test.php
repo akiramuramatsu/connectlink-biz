@@ -14,10 +14,10 @@ $data = $mp->request(array('events'), array(
 
 var_dump($data);
 echo "---- ----- \n";
-var_dump($data["data"]["values"]["launch study app"]);
+var_dump($data->data->values->{'launch study app'});
 
 $total = 0;
-foreach ($data["data"]["values"]["launch study app"] as $key => $value) {
+foreach (array($data->data->values->{'launch study app'}) as $key => $value) {
 	$total += $value;
 }
 echo "<br/>".$total."<br/>";
