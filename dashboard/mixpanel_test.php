@@ -35,7 +35,7 @@ $data_device = $mp->request(array('segmentation'), array(
     'type' => 'general',
     'unit' => 'month',
     'limit' => '5',
-    'on' => "properties[Model]"
+    'on' => "properties[\"Model\"]"
 ));
 echo "<!--";
 var_dump($data_device);
