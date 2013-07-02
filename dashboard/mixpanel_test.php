@@ -164,6 +164,8 @@ foreach ($total_data_country as $key2 => $value2) {
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         var chart_country = new google.visualization.PieChart(document.getElementById('chart_country_div'));
         chart.draw(data, options);
+        
+        options.title = "Country";
         chart_country.draw(data_country, options);
         
         
