@@ -33,10 +33,13 @@ date_default_timezone_set("UTC");
 $current_utc_time = time();
 // currnet yyyy-mm-dd
 $to_date = date("Y-m-d", $current_utc_time);
+$from_utc_time = $current_utc_time - 60 * 60 * 24 * 60;//60 days in seconds
+$from_date = date("Y-m-d", $from_utc_time);
+
 
 $data_device = $mp->request(array('segmentation'), array(
     'event' => 'the first launch',
-    'from_date' => '2013-04-01',
+    'from_date' => $from_date,
     'to_date' => $to_date,
     'type' => 'unique',
     'unit' => 'month',
