@@ -128,9 +128,9 @@ foreach ($total_data_os as $key2 => $value2) {
         var options = {'title':'Android OS Version'
         	,'backgroundColor' : '#3e506a'
         	,'titleTextStyle' : {color: 'white'}
-        	,'tooltip': {textStyle: {color: 'white'}}
+        	,'tooltip': {textStyle: {color: 'white', fontSize:14}}
         	,'pieSliceTextStyle': {color: 'white'}
-        	,'legend': {textStyle:{color: 'white'}}
+        	,'legend': {textStyle:{color: 'white', fontSize:14}}
         };
 
         // Instantiate and draw our chart, passing in some options.
