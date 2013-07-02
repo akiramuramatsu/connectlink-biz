@@ -34,6 +34,7 @@ $data_device = $mp->request(array('segmentation'), array(
     'to_date' => '2013-06-30',
     'type' => 'general',
     'unit' => 'month',
+    'limit' => '5',
     'on' => 'properties["Model"]'
 ));
 echo "<!--";
