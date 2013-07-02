@@ -6,7 +6,7 @@ $api_secret = '5514393a22a43ba7437c9ccc385bc0d8';
 
 $mp = new Mixpanel($api_key, $api_secret);
 $data = $mp->request(array('events'), array(
-    'event' => array('launch study app', 'launch fun app'),
+    'event' => array('launch study app', 'launch fun app', 'study completed'),
     'type' => 'general',
     'unit' => 'month',
     'interval' => '12',
@@ -22,6 +22,10 @@ foreach (get_object_vars($data->data->values->{'launch study app'}) as $key => $
 $total_fun = 0;
 foreach (get_object_vars($data->data->values->{'launch fun app'}) as $key => $value) {
 	$total_fun += $value;
+}
+$total_complete = 0;
+foreach (get_object_vars($data->data->values->{'study completed'}) as $key => $value) {
+	$total_complete += $value;
 }
 
 ?>
@@ -54,9 +58,8 @@ body {
           <h2><?php echo $total_fun;?> times</h2>
        </div>
         <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h2>Study Completed</h2>
+          <h2><?php echo $total_completed;?> times</h2>
         </div>
       </div>
 
