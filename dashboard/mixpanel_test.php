@@ -6,7 +6,7 @@ $api_secret = '5514393a22a43ba7437c9ccc385bc0d8';
 
 $mp = new Mixpanel($api_key, $api_secret);
 $data = $mp->request(array('events'), array(
-    'event' => array('launch study app'),
+    'event' => array('launch study app', 'launch fun app'),
     'type' => 'general',
     'unit' => 'month',
     'interval' => '12',
@@ -19,6 +19,11 @@ $total = 0;
 foreach (get_object_vars($data->data->values->{'launch study app'}) as $key => $value) {
 	$total += $value;
 }
+$total_fun = 0;
+foreach (get_object_vars($data->data->values->{'launch fun app'}) as $key => $value) {
+	$total_fun += $value;
+}
+
 ?>
 <html>
 	<head>
@@ -41,14 +46,12 @@ body {
       <!-- Example row of columns -->
       <div class="row">
         <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h2>Launch Study App</h2>
+          <h2><?php echo $total;?> times</h2>
         </div>
         <div class="span4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <h2>Launch Fun App</h2>
+          <h2><?php echo $total_fun;?> times</h2>
        </div>
         <div class="span4">
           <h2>Heading</h2>
@@ -65,9 +68,6 @@ body {
 
     </div>	
 	
-	
-	<h1><?php echo $total;?> times</h1>
-
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="./assets/bootstrap/js/bootstrap.js"></script>
 </body>
