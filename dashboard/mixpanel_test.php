@@ -28,6 +28,19 @@ foreach (get_object_vars($data->data->values->{'study completed'}) as $key => $v
 	$total_completed += $value;
 }
 
+$data_device = $mp->request(array('events','properties'), array(
+    'event' => 'the first launch',
+    'name' => 'OS Version',
+    'type' => 'general',
+    'unit' => 'month',
+    'interval' => '12',
+    'limit' => '12'
+));
+echo "<!--";
+var_dump($data_device);
+echo "--> \n";
+
+
 ?>
 <html>
 	<head>
