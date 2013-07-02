@@ -60,7 +60,8 @@ foreach ($device_static_values as $key => $value) {
 	foreach ($value_map_data as $key2 => $value2) {
 		$total_data += $value2;
 	}
-	array_push($total_data_os, array($data_key => $total_data));
+	$total_data_os[$data_key] = $total_data;
+	// array_push($total_data_os, array($data_key => $total_data));
 }
 
 
