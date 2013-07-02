@@ -31,6 +31,6 @@ body {
 		</style>
 	</head>
 <body>
-	<h1><?php echo $total;?></h1>
+	<h1><?php echo $total;?> times</h1>
 </body>
 </html>
