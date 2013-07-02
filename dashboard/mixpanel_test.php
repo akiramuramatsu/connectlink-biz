@@ -50,9 +50,25 @@ echo "<!--";
 var_dump($data_device);
 echo "--> \n";
 
+$total_data_os = array();
 $device_static_values = get_object_vars($data_device->data->values);
+foreach ($device_static_values as $key => $value) {
+	$data_key = $key;
+	$total_data = 0;
+	// 
+	$value_map_data = get_object_vars($value);
+	foreach ($value_map_data as $key2 => $value2) {
+		$total_data += $value2;
+	}
+	array_push($total_data_os, array($data_key => $total_data));
+}
+
+
 echo "<!--";
 var_dump($device_static_values);
+echo "--> \n";
+echo "<!--";
+var_dump($total_data_os);
 echo "--> \n";
 
 
