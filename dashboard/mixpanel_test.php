@@ -129,6 +129,7 @@ foreach ($total_data_os as $key2 => $value2) {
         	,'backgroundColor' : '#3e506a'
         	,'titleTextStyle' : {color: 'white'}
         	,'tooltip.textStyle':  {color: 'white'}
+        	,'pieSliceTextStyle': {color: 'white'}
         };
 
         // Instantiate and draw our chart, passing in some options.
