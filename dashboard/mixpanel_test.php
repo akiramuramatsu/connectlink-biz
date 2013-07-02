@@ -53,6 +53,18 @@ echo "--> \n";
 $device_static_values = get_object_vars($data_device->data->values);
 $total_data_os = calc($device_static_values);
 
+$data_country = $mp->request(array('segmentation'), array(
+    'event' => 'the first launch',
+    'from_date' => $from_date,
+    'to_date' => $to_date,
+    'type' => 'unique',
+    'unit' => 'month',
+    'limit' => '5',
+    'on' => 'properties["$country"]'
+));
+$device_static_values_country = get_object_vars($data_country->data->values);
+$total_data_country = calc($device_static_values_country);
+
 
 echo "<!--";
 var_dump($device_static_values);
@@ -112,6 +124,16 @@ body {
       // instantiates the pie chart, passes in the data and
       // draws it.
       function drawChart() {
+      	
+        // Set chart options
+        var options = {'title':'Android OS Version'
+        	,'backgroundColor' : '#3e506a'
+        	,'titleTextStyle' : {color: 'white', fontSize:25}
+        	,'tooltip': {textStyle: {color: 'white', fontSize:25}}
+        	,'pieSliceTextStyle': {color: 'white'}
+        	,'legend': {textStyle:{color: 'white', fontSize:14}}
+        };
+      	
 
         // Create the data table.
         var data = new google.visualization.DataTable();
@@ -124,24 +146,28 @@ foreach ($total_data_os as $key2 => $value2) {
 }
         	?>
         ]);
-
-        // Set chart options
-        /*
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
-                       */
-        var options = {'title':'Android OS Version'
-        	,'backgroundColor' : '#3e506a'
-        	,'titleTextStyle' : {color: 'white', fontSize:25}
-        	,'tooltip': {textStyle: {color: 'white', fontSize:25}}
-        	,'pieSliceTextStyle': {color: 'white'}
-        	,'legend': {textStyle:{color: 'white', fontSize:14}}
-        };
+        
+        
+        var data_country = new google.visualization.DataTable();
+        data_country.addColumn('string', 'Version');
+        data_country.addColumn('number', 'Count');
+        data_country.addRows([
+        	<?php
+foreach ($total_data_country as $key2 => $value2) {
+	echo "['".$key2."',".$value2."],\n";
+}
+        	?>
+        ]);
+        
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        var chart_country = new google.visualization.PieChart(document.getElementById('chart_country_div'));
         chart.draw(data, options);
+        chart_country.draw(data_country, options);
+        
+        
+        
       }
     </script>		
 		
@@ -171,6 +197,7 @@ foreach ($total_data_os as $key2 => $value2) {
         	<div id="chart_div"></div>
         </div>
         <div class="span4 blackbox">
+        	<div id="chart_country_div"></div>
        </div>
         <div class="span4 blackbox">
         </div>
