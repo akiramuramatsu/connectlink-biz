@@ -28,10 +28,16 @@ foreach (get_object_vars($data->data->values->{'study completed'}) as $key => $v
 	$total_completed += $value;
 }
 
+// retrieve past 60 days data
+date_default_timezone_set("UTC");
+$current_utc_time = time();
+// currnet yyyy-mm-dd
+$to_date = date("Y-m-d", $current_utc_time);
+
 $data_device = $mp->request(array('segmentation'), array(
     'event' => 'the first launch',
     'from_date' => '2013-04-01',
-    'to_date' => '2013-06-30',
+    'to_date' => $to_date,
     'type' => 'unique',
     'unit' => 'month',
     'limit' => '255',
