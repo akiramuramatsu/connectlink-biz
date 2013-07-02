@@ -127,7 +127,7 @@ foreach ($total_data_os as $key2 => $value2) {
                        */
         var options = {'title':'Android OS Version'
         	,'backgroundColor' : '#3e506a'
-        	,'titleTextStyle' : {color: 'white'}
+        	,'titleTextStyle' : {color: 'white', fontSize:25}
         	,'tooltip': {textStyle: {color: 'white', fontSize:25}}
         	,'pieSliceTextStyle': {color: 'white'}
         	,'legend': {textStyle:{color: 'white', fontSize:25}}
