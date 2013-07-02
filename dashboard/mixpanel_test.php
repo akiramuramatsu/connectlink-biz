@@ -65,6 +65,17 @@ $data_country = $mp->request(array('segmentation'), array(
 $device_static_values_country = get_object_vars($data_country->data->values);
 $total_data_country = calc($device_static_values_country);
 
+$data_telephone = $mp->request(array('segmentation'), array(
+    'event' => 'the first launch',
+    'from_date' => $from_date,
+    'to_date' => $to_date,
+    'type' => 'unique',
+    'unit' => 'month',
+    'limit' => '5',
+    'on' => 'properties["$has_telephone"]'
+));
+$device_static_values = get_object_vars($data_telephone->data->values);
+$total_data_telephone = calc($device_static_values);
 
 echo "<!--";
 var_dump($device_static_values);
@@ -159,6 +170,16 @@ foreach ($total_data_country as $key2 => $value2) {
         	?>
         ]);
         
+        var data_telephone = new google.visualization.DataTable();
+        data_telephone.addColumn('string', 'Telephone');
+        data_telephone.addColumn('number', 'Count');
+        data_telephone.addRows([
+        	<?php
+foreach ($total_data_telephone as $key2 => $value2) {
+	echo "['".$key2."',".$value2."],\n";
+}
+        	?>
+        ]);
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -168,6 +189,9 @@ foreach ($total_data_country as $key2 => $value2) {
         options.title = "Country";
         chart_country.draw(data_country, options);
         
+        var chart_telephone = new google.visualization.PieChart(document.getElementById('chart_telephone_div'));
+        options.title = "Telephone";
+        chart_telephone.draw(chart_telephone, options);
         
         
       }
