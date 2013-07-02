@@ -50,6 +50,11 @@ echo "<!--";
 var_dump($data_device);
 echo "--> \n";
 
+$device_static_values = get_object_vars($data_device->data->values);
+echo "<!--";
+var_dump($device_static_values);
+echo "--> \n";
+
 
 ?>
 <html>
