@@ -91,6 +91,7 @@ body {
 	background-color: #3e506a;
 	border-radius: 10px;
 }
+.top-buffer { margin-top:20px; }
 		</style>
 		
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -160,7 +161,7 @@ foreach ($total_data_os as $key2 => $value2) {
         </div>
       </div>
       
-      <div class="row">
+      <div class="row top-buffer">
         <div class="span4 blackbox">
         	<div id="chart_div"></div>
         </div>
