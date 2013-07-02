@@ -23,9 +23,9 @@ $total_fun = 0;
 foreach (get_object_vars($data->data->values->{'launch fun app'}) as $key => $value) {
 	$total_fun += $value;
 }
-$total_complete = 0;
+$total_completed = 0;
 foreach (get_object_vars($data->data->values->{'study completed'}) as $key => $value) {
-	$total_complete += $value;
+	$total_completed += $value;
 }
 
 ?>
