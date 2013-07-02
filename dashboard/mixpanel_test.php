@@ -125,7 +125,10 @@ foreach ($total_data_os as $key2 => $value2) {
                        'width':400,
                        'height':300};
                        */
-        var options = {'title':'Android OS Version'};
+        var options = {'title':'Android OS Version'
+        	,'backgroundColor' : '#3e506a'
+        	,'titleTextStyle' : {color: 'white'}
+        };
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
