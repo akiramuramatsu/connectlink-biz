@@ -60,7 +60,7 @@ $data_country = $mp->request(array('segmentation'), array(
     'type' => 'unique',
     'unit' => 'month',
     'limit' => '5',
-    'on' => 'properties["$country"]'
+    'on' => 'properties["$mp_country_code"]'
 ));
 $device_static_values_country = get_object_vars($data_country->data->values);
 $total_data_country = calc($device_static_values_country);
