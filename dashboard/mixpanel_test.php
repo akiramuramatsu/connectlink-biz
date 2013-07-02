@@ -41,6 +41,10 @@ body {
 	background-color: #00432f;
 	color: #EEEEEE;
 }			
+.blackbox {
+	background-color: #111111;
+	border-radius: 5px;
+}
 		</style>
 	</head>
 <body>
@@ -49,15 +53,15 @@ body {
 
       <!-- Example row of columns -->
       <div class="row">
-        <div class="span4">
+        <div class="span4 blackbox">
           <h2><?php echo $total;?></h2>
           <h3>Launch Study App</h3>
         </div>
-        <div class="span4">
+        <div class="span4 blackbox">
           <h2><?php echo $total_fun;?></h2>
           <h3>Launch Fun App</h3>
        </div>
-        <div class="span4">
+        <div class="span4 blackbox">
           <h2><?php echo $total_completed;?></h2>
           <h3>Study Completed</h3>
         </div>
