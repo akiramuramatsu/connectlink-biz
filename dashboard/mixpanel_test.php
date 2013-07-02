@@ -29,13 +29,13 @@ foreach (get_object_vars($data->data->values->{'study completed'}) as $key => $v
 }
 
 $data_device = $mp->request(array('segmentation'), array(
-    'event' => 'the first launch',
+    'event' => 'home screen',
     'from_date' => '2013-06-01',
     'to_date' => '2013-06-30',
     'type' => 'general',
     'unit' => 'month',
     'limit' => '5',
-    'on' => 'properties["Model"]'
+    'on' => 'properties["elapsed"]'
 ));
 echo "<!--";
 var_dump($data_device);
