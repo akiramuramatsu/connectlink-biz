@@ -17,7 +17,7 @@ echo "---- ----- \n";
 var_dump($data->data->values->{'launch study app'});
 
 $total = 0;
-foreach (array($data->data->values->{'launch study app'}) as $key => $value) {
+foreach (get_object_vars($data->data->values->{'launch study app'}) as $key => $value) {
 	$total += $value;
 }
 echo "<br/>".$total."<br/>";
