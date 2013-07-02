@@ -42,8 +42,9 @@ body {
 	color: #EEEEEE;
 }			
 .blackbox {
-	background-color: #111111;
-	border-radius: 5px;
+	text-align:center;
+	background-color: #3e506a;
+	border-radius: 10px;
 }
 		</style>
 	</head>
