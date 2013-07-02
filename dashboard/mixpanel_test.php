@@ -43,7 +43,7 @@ $data_device = $mp->request(array('segmentation'), array(
     'to_date' => $to_date,
     'type' => 'unique',
     'unit' => 'month',
-    'limit' => '255',
+    'limit' => '5',
     'on' => 'properties["$os_version"]'
 ));
 echo "<!--";
