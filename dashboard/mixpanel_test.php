@@ -32,7 +32,6 @@ $data_device = $mp->request(array('segmentation'), array(
     'event' => 'the first launch',
     'from_date' => '2013-06-01',
     'to_date' => '2013-06-30',
-    'name' => 'Os Version',
     'type' => 'general',
     'unit' => 'month',
     'on' => 'properties["Os Version"]'
