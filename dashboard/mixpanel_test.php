@@ -226,6 +226,7 @@ foreach ($total_data_telephone as $key2 => $value2) {
         	<div id="chart_country_div"></div>
        </div>
         <div class="span4 blackbox">
+        	<div id="chart_telephone_div"></div>
         </div>
       </div>
       
