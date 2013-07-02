@@ -120,9 +120,12 @@ body {
         ]);
 
         // Set chart options
+        /*
         var options = {'title':'How Much Pizza I Ate Last Night',
                        'width':400,
                        'height':300};
+                       */
+        var options = {'title':'Android OS Version'};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
