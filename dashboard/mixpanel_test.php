@@ -66,7 +66,7 @@ body {
       <hr>
 
       <footer>
-        <p>&copy; Company 2013</p>
+        <p><img src="common/images/connectlink_logo_green.gif"/>&copy; Company 2013</p>
       </footer>
 
     </div>	
