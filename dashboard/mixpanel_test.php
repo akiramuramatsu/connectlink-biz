@@ -50,16 +50,16 @@ body {
       <!-- Example row of columns -->
       <div class="row">
         <div class="span4">
-          <h2>Launch Study App</h2>
-          <h2><?php echo $total;?> times</h2>
+          <h2><?php echo $total;?></h2>
+          <h3>Launch Study App</h3>
         </div>
         <div class="span4">
-          <h2>Launch Fun App</h2>
-          <h2><?php echo $total_fun;?> times</h2>
+          <h2><?php echo $total_fun;?></h2>
+          <h3>Launch Fun App</h3>
        </div>
         <div class="span4">
-          <h2>Study Completed</h2>
-          <h2><?php echo $total_completed;?> times</h2>
+          <h2><?php echo $total_completed;?></h2>
+          <h3>Study Completed</h3>
         </div>
       </div>
 
