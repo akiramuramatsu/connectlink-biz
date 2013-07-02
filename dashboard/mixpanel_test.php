@@ -191,7 +191,7 @@ foreach ($total_data_telephone as $key2 => $value2) {
         
         var chart_telephone = new google.visualization.PieChart(document.getElementById('chart_telephone_div'));
         options.title = "Telephone";
-        chart_telephone.draw(chart_telephone, options);
+        chart_telephone.draw(data_telephone, options);
         
         
       }
