@@ -32,10 +32,10 @@ $data_device = $mp->request(array('segmentation'), array(
     'event' => 'the first launch',
     'from_date' => '2013-06-01',
     'to_date' => '2013-06-30',
-    'type' => 'os_version',
+    'type' => 'unique',
     'unit' => 'day',
     'limit' => '255',
-    'on' => 'properties["model"]'
+    'on' => 'properties["os_version"]'
 ));
 echo "<!--";
 var_dump($data_device);
