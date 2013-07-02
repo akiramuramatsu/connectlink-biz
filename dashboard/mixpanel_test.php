@@ -34,7 +34,7 @@ $data_device = $mp->request(array('segmentation'), array(
     'to_date' => '2013-06-30',
     'type' => 'general',
     'unit' => 'month',
-    'on' => 'properties["Os Version"]'
+    'on' => 'properties["Model"]'
 ));
 echo "<!--";
 var_dump($data_device);
