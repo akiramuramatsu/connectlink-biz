@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 require 'mixpanel.php';
 $api_key = '4c0e9c992953d876ebd57c936e0e7be7';
@@ -11,15 +12,25 @@ $data = $mp->request(array('events'), array(
     'interval' => '12',
     'limit' => '12'
 ));
-
+echo "<!--";
 var_dump($data);
-echo "---- ----- \n";
-var_dump($data->data->values->{'launch study app'});
-
+echo "--> \n";
 $total = 0;
 foreach (get_object_vars($data->data->values->{'launch study app'}) as $key => $value) {
 	$total += $value;
 }
-echo "<br/>".$total."<br/>";
-
 ?>
+<html>
+	<head>
+		<title>ConnectLink Dashboard</title>
+		<style type="text/css">
+body {
+	background-color: #00432f;
+	color: #EEEEEE;
+}			
+		</style>
+	</head>
+<body>
+	<h1><?php echo $total;?></h1>
+</body>
+</html>
