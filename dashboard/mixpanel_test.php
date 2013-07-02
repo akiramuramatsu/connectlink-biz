@@ -25,8 +25,8 @@ foreach (get_object_vars($data->data->values->{'launch study app'}) as $key => $
 		<title>ConnectLink Dashboard</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <!-- Bootstrap -->
-	    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">		
-		
+	    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">		
+	    <link href="assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">		
 		<style type="text/css">
 body {
 	background-color: #00432f;
