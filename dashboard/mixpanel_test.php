@@ -116,7 +116,7 @@ body {
 }			
 .blackbox {
 	text-align:center;
-	background-color: #3e506a;
+	background-color: #000043;
 	border-radius: 10px;
 }
 .top-buffer { margin-top:20px; }
@@ -138,7 +138,7 @@ body {
       	
         // Set chart options
         var options = {'title':'Android OS Version'
-        	,'backgroundColor' : '#3e506a'
+        	,'backgroundColor' : '#000043'
         	,'titleTextStyle' : {color: 'white', fontSize:25}
         	,'tooltip': {textStyle: {color: 'white', fontSize:25}}
         	,'pieSliceTextStyle': {color: 'white'}
